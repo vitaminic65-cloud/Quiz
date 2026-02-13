@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Quiz di Addestramento</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Schermata Menu Principale -->
+    <div id="menuScreen" class="screen active">
+        <div class="container">
+            <h1 class="app-title">Quiz di Addestramento</h1>
+            <p class="subtitle">Seleziona un quiz per iniziare</p>
+            
+            <div class="menu-buttons">
+                <!-- Quiz specifici (8 capitoli) -->
+                <button class="menu-btn" data-quiz="1">
+                    <span class="quiz-number">01</span>
+                    <span class="quiz-title">Cap.1 TRAUMA</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="2">
+                    <span class="quiz-number">02</span>
+                    <span class="quiz-title">Capitolo 2</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="3">
+                    <span class="quiz-number">03</span>
+                    <span class="quiz-title">Capitolo 3</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="4">
+                    <span class="quiz-number">04</span>
+                    <span class="quiz-title">Capitolo 4</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="5">
+                    <span class="quiz-number">05</span>
+                    <span class="quiz-title">Capitolo 5</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="6">
+                    <span class="quiz-number">06</span>
+                    <span class="quiz-title">Capitolo 6</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="7">
+                    <span class="quiz-number">07</span>
+                    <span class="quiz-title">Capitolo 7</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="8">
+                    <span class="quiz-number">08</span>
+                    <span class="quiz-title">Capitolo 8</span>
+                </button>
+                
+                <!-- Quiz Generale -->
+                <button class="menu-btn general-quiz" data-quiz="general">
+                    <span class="quiz-icon">★</span>
+                    <span class="quiz-title">Quiz Generale</span>
+                    <span class="quiz-info">50 Domande</span>
+                </button>
+            </div>
+            
+            <div class="stats-container">
+                <button id="clearStatsBtn" class="clear-stats-btn">Cancella Statistiche</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schermata Quiz -->
+    <div id="quizScreen" class="screen">
+        <div class="container">
+            <!-- Header con timer e progresso -->
+            <div class="quiz-header">
+                <button id="backBtn" class="back-btn">← Menu</button>
+                <div class="progress-info">
+                    <span id="questionProgress">Domanda 1 / 30</span>
+                </div>
+                <div class="timer-container">
+                    <div id="timerCircle" class="timer-circle">
+                        <span id="timerText">10</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra di progresso -->
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            
+            <!-- Domanda -->
+            <div class="question-container">
+                <h2 id="questionText" class="question-text"></h2>
+            </div>
+            
+            <!-- Opzioni di risposta -->
+            <div id="answersContainer" class="answers-container"></div>
+        </div>
+    </div>
+
+    <!-- Schermata Risultati -->
+    <div id="resultsScreen" class="screen">
+        <div class="container">
+            <div class="results-container">
+                <h1 class="results-title">Quiz Completato!</h1>
+                
+                <div class="score-circle">
+                    <div class="score-percentage">
+                        <span id="scorePercentage">0</span>%
+                    </div>
+                    <svg class="score-ring" width="200" height="200">
+                        <circle class="score-ring-background" cx="100" cy="100" r="90"></circle>
+                        <circle id="scoreRingProgress" class="score-ring-progress" cx="100" cy="100" r="90"></circle>
+                    </svg>
+                </div>
+                
+                <div class="results-details">
+                    <div class="result-stat">
+                        <span class="result-label">Risposte Corrette</span>
+                        <span id="correctAnswers" class="result-value correct">0</span>
+                    </div>
+                    <div class="result-stat">
+                        <span class="result-label">Risposte Errate</span>
+                        <span id="wrongAnswers" class="result-value wrong">0</span>
+                    </div>
+                    <div class="result-stat">
+                        <span class="result-label">Domande Totali</span>
+                        <span id="totalQuestions" class="result-value">0</span>
+                    </div>
+                </div>
+                
+                <div id="resultMessage" class="result-message"></div>
+                
+                <div class="results-buttons">
+                    <button id="retryBtn" class="result-btn retry">Riprova Quiz</button>
+                    <button id="menuBtn" class="result-btn menu">Torna al Menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="js/quizzes/capitolo1.js"></script>
+    <script src="js/quizzes/capitolo2.js"></script>
+    <script src="js/quizzes/capitolo3.js"></script>
+    <script src="js/quizzes/capitolo4.js"></script>
+    <script src="js/quizzes/capitolo5.js"></script>
+    <script src="js/quizzes/capitolo6.js"></script>
+    <script src="js/quizzes/capitolo7.js"></script>
+    <script src="js/quizzes/capitolo8.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
