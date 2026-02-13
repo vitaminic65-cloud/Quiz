@@ -1,0 +1,554 @@
+/* ========================================
+   RESET E VARIABILI
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #2563eb;
+    --primary-dark: #1e40af;
+    --secondary-color: #10b981;
+    --error-color: #ef4444;
+    --warning-color: #f59e0b;
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+/* ========================================
+   LAYOUT GENERALE
+   ======================================== */
+.screen {
+    display: none;
+    min-height: 100vh;
+    padding: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.screen.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ========================================
+   SCHERMATA MENU
+   ======================================== */
+.app-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    font-size: 0.95rem;
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.menu-btn {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.menu-btn:active {
+    transform: scale(0.98);
+}
+
+.menu-btn:hover::before {
+    left: 100%;
+}
+
+.quiz-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.quiz-title {
+    flex-grow: 1;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: left;
+}
+
+.general-quiz {
+    background: linear-gradient(135deg, var(--secondary-color), #059669);
+    border-color: var(--secondary-color);
+    color: white;
+    margin-top: 8px;
+    padding: 24px;
+}
+
+.general-quiz .quiz-icon {
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.general-quiz .quiz-title,
+.general-quiz .quiz-info {
+    color: white;
+}
+
+.quiz-info {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+.stats-container {
+    margin-top: 32px;
+    text-align: center;
+}
+
+.clear-stats-btn {
+    background: transparent;
+    border: 2px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.clear-stats-btn:active {
+    transform: scale(0.95);
+    background: var(--bg-color);
+}
+
+/* ========================================
+   SCHERMATA QUIZ
+   ======================================== */
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 12px;
+}
+
+.back-btn {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.back-btn:active {
+    transform: scale(0.95);
+    background: var(--bg-color);
+}
+
+.progress-info {
+    flex-grow: 1;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.timer-container {
+    flex-shrink: 0;
+}
+
+.timer-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 3px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    position: relative;
+    transition: var(--transition);
+}
+
+.timer-circle.warning {
+    border-color: var(--warning-color);
+    color: var(--warning-color);
+    animation: pulse 1s infinite;
+}
+
+.timer-circle.danger {
+    border-color: var(--error-color);
+    color: var(--error-color);
+    animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.progress-bar {
+    height: 6px;
+    background: var(--border-color);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    width: 0%;
+    transition: width 0.4s ease;
+    border-radius: 3px;
+}
+
+.question-container {
+    background: var(--card-bg);
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--border-color);
+}
+
+.question-text {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+.answers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.answer-btn {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    padding: 18px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    text-align: left;
+    line-height: 1.5;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.answer-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary-color);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.answer-btn:active {
+    transform: scale(0.98);
+}
+
+.answer-btn.selected {
+    border-color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.answer-btn.selected::before {
+    transform: scaleY(1);
+}
+
+.answer-btn.correct {
+    border-color: var(--secondary-color);
+    background: rgba(16, 185, 129, 0.1);
+    animation: correctPulse 0.5s ease;
+}
+
+.answer-btn.correct::before {
+    background: var(--secondary-color);
+    transform: scaleY(1);
+}
+
+.answer-btn.wrong {
+    border-color: var(--error-color);
+    background: rgba(239, 68, 68, 0.1);
+    animation: wrongShake 0.5s ease;
+}
+
+.answer-btn.wrong::before {
+    background: var(--error-color);
+    transform: scaleY(1);
+}
+
+.answer-btn.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+@keyframes correctPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+@keyframes wrongShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* ========================================
+   SCHERMATA RISULTATI
+   ======================================== */
+.results-container {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.results-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 32px;
+}
+
+.score-circle {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 32px;
+}
+
+.score-percentage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.score-ring {
+    transform: rotate(-90deg);
+}
+
+.score-ring-background {
+    fill: none;
+    stroke: var(--border-color);
+    stroke-width: 12;
+}
+
+.score-ring-progress {
+    fill: none;
+    stroke: var(--secondary-color);
+    stroke-width: 12;
+    stroke-linecap: round;
+    stroke-dasharray: 565.48;
+    stroke-dashoffset: 565.48;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.results-details {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--border-color);
+}
+
+.result-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.result-stat:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.result-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.result-value.correct {
+    color: var(--secondary-color);
+}
+
+.result-value.wrong {
+    color: var(--error-color);
+}
+
+.result-message {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.results-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.result-btn {
+    padding: 16px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: var(--transition);
+    border: none;
+}
+
+.result-btn.retry {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+}
+
+.result-btn.retry:active {
+    transform: scale(0.98);
+}
+
+.result-btn.menu {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.result-btn.menu:active {
+    transform: scale(0.98);
+    background: var(--bg-color);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (min-width: 768px) {
+    .app-title {
+        font-size: 2.5rem;
+    }
+    
+    .question-text {
+        font-size: 1.3rem;
+    }
+    
+    .answer-btn {
+        font-size: 1.05rem;
+        padding: 20px 24px;
+    }
+    
+    .results-buttons {
+        flex-direction: row;
+    }
+    
+    .result-btn {
+        flex: 1;
+    }
+}
+
+/* ========================================
+   UTILITÀ
+   ======================================== */
+.fade-in {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
