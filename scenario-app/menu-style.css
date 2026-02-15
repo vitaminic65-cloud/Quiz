@@ -1,0 +1,121 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #F8FAFC 0%, #E0E7FF 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+.container { max-width: 1200px; margin: 0 auto; }
+h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-align: center;
+    margin: 30px 0 10px 0;
+    background: linear-gradient(135deg, #4F46E5, #6366F1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.subtitle {
+    text-align: center;
+    color: #64748B;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+}
+
+.category-section {
+    margin-bottom: 50px;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 12px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.category-icon {
+    font-size: 2rem;
+}
+
+.category-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1E293B;
+}
+
+.category-count {
+    margin-left: auto;
+    background: rgba(79, 70, 229, 0.1);
+    color: #4F46E5;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.scenarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+.scenario-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 2px solid #E2E8F0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.scenario-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.2);
+    border-color: #4F46E5;
+}
+.scenario-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.scenario-icon {
+    font-size: 2.5rem;
+}
+.scenario-code {
+    background: rgba(79, 70, 229, 0.1);
+    color: #4F46E5;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+.scenario-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1E293B;
+    margin-bottom: 8px;
+}
+.scenario-info {
+    color: #64748B;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+.scenario-difficulty {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #64748B;
+}
+.difficulty-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+.diff-alta { background: #FEE2E2; color: #DC2626; }
+.diff-media { background: #FEF3C7; color: #D97706; }

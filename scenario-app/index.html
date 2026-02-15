@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#4F46E5">
+    <title>Quiz AREU - Scenario Mode</title>
+    <link rel="stylesheet" href="css/style-scenario.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    
+    <!-- SCENARIO MODE SCREEN -->
+    <div id="scenarioModeScreen" class="screen">
+        <div class="container">
+            <!-- Briefing Iniziale -->
+            <div id="scenarioBriefing" class="scenario-briefing">
+                <h1 class="scenario-title">
+                    <span class="scenario-icon">🎭</span>
+                    <span id="scenarioTitle">SCENARIO</span>
+                </h1>
+                
+                <div class="central-info-box">
+                    <div class="info-label">📞 INFORMAZIONI DALLA CENTRALE:</div>
+                    <div id="centralCall" class="central-call"></div>
+                    
+                    <div class="info-checkboxes">
+                        <div class="info-check">
+                            MSA/MSI: <span id="msaMsiCheck" class="check-icon">❌</span>
+                        </div>
+                        <div class="info-check">
+                            Forze Ordine: <span id="foCheck" class="check-icon">❌</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="startScenarioBtn" class="start-scenario-btn">
+                    🚀 Inizia Intervento
+                </button>
+            </div>
+            
+            <!-- Scenario In Corso -->
+            <div id="scenarioInProgress" class="scenario-progress" style="display: none;">
+                <!-- Header -->
+                <div class="scenario-header">
+                    <button id="exitScenarioBtn" class="exit-btn">← Esci</button>
+                    <div class="phase-indicator">
+                        <span id="currentPhase">FASE</span>
+                    </div>
+                    <div class="score-display">
+                        <span id="currentScore">0</span> pt
+                    </div>
+                </div>
+                
+                <!-- Situation Card -->
+                <div class="situation-card">
+                    <div class="situation-icon-header">
+                        <span class="sit-icon">📍</span>
+                        <span id="situationPhase" class="sit-phase">SITUAZIONE</span>
+                    </div>
+                    <p id="situationText" class="situation-text"></p>
+                    
+                    <!-- Vital Signs (se presenti) -->
+                    <div id="vitalSignsBox" class="vital-signs-box" style="display: none;">
+                        <div class="vital-title">📊 Parametri Rilevabili:</div>
+                        <div id="vitalSignsContent" class="vital-content"></div>
+                    </div>
+                </div>
+                
+                <!-- Question Card -->
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="q-icon">❓</span>
+                        <span class="q-label">COSA FAI?</span>
+                    </div>
+                    <h2 id="questionText" class="question-text-scenario"></h2>
+                    
+                    <!-- Timer (opzionale) -->
+                    <div id="timerBox" class="timer-box" style="display: none;">
+                        <div class="timer-label">⏱️ Tempo:</div>
+                        <div id="timerDisplay" class="timer-display">30s</div>
+                    </div>
+                </div>
+                
+                <!-- Choices -->
+                <div id="choicesContainer" class="choices-container"></div>
+                
+                <!-- Feedback (dopo risposta) -->
+                <div id="feedbackBox" class="feedback-box" style="display: none;">
+                    <div id="feedbackIcon" class="feedback-icon"></div>
+                    <div id="feedbackText" class="feedback-text"></div>
+                    <div id="consequenceText" class="consequence-text"></div>
+                    <button id="continueBtn" class="continue-btn">Continua →</button>
+                </div>
+            </div>
+            
+            <!-- Risultati Scenario -->
+            <div id="scenarioResults" class="scenario-results" style="display: none;">
+                <h1 class="results-title-scenario">
+                    <span id="resultsEmoji">🎯</span>
+                    <span>SCENARIO COMPLETATO</span>
+                </h1>
+                
+                <div class="final-score-box">
+                    <div class="score-label">Punteggio Finale</div>
+                    <div class="score-value">
+                        <span id="finalScore">0</span>
+                        <span class="score-max">/ 200</span>
+                    </div>
+                    <div id="scorePercentage" class="score-percentage"></div>
+                </div>
+                
+                <div class="performance-badge">
+                    <div id="performanceBadge" class="badge-icon">⭐</div>
+                    <div id="performanceLabel" class="badge-label">OTTIMO</div>
+                </div>
+                
+                <div class="feedback-sections">
+                    <div class="feedback-section strength">
+                        <h3>💪 Punti di Forza</h3>
+                        <ul id="strengthsList"></ul>
+                    </div>
+                    
+                    <div class="feedback-section improve">
+                        <h3>📈 Aspetti Migliorabili</h3>
+                        <ul id="improveList"></ul>
+                    </div>
+                </div>
+                
+                <div class="results-actions">
+                    <button id="retryScenarioBtn" class="action-btn retry">
+                        🔄 Riprova Scenario
+                    </button>
+                    <button id="backToMenuBtn" class="action-btn menu">
+                        🏠 Torna al Menu
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/scenario_01_abuso_alcoolico.js"></script>
+    <script src="js/scenario_02_tuffo_scogli.js"></script>
+    <!-- Scripts -->
+    <script src="js/scenario_01_abuso_alcoolico.js"></script>
+    <script src="js/scenario_02_tuffo_scogli.js"></script>
+    <script src="js/scenario_03_donna_gravida.js"></script>
+    <script src="js/scenario_04_diabete_ipoglicemia.js"></script>
+    <script src="js/scenario_05_dolore_addominale.js"></script>
+    <!-- Scripts -->
+    <script src="js/scenario_01_abuso_alcoolico.js"></script>
+    <script src="js/scenario_02_tuffo_scogli.js"></script>
+    <script src="js/scenario_03_donna_gravida.js"></script>
+    <script src="js/scenario_04_diabete_ipoglicemia.js"></script>
+    <script src="js/scenario_05_dolore_addominale.js"></script>
+    <script src="js/scenario_06_cardiopalmo.js"></script>
+    <script src="js/scenario_07_ipertensione.js"></script>
+    <script src="js/scenario_08_ima.js"></script>
+    <!-- Scripts -->
+    <script src="js/scenario_01_abuso_alcoolico.js"></script>
+    <script src="js/scenario_02_tuffo_scogli.js"></script>
+    <script src="js/scenario_03_donna_gravida.js"></script>
+    <script src="js/scenario_04_diabete_ipoglicemia.js"></script>
+    <script src="js/scenario_05_dolore_addominale.js"></script>
+    <script src="js/scenario_06_cardiopalmo.js"></script>
+    <script src="js/scenario_07_ipertensione.js"></script>
+    <script src="js/scenario_08_ima.js"></script>
+    <script src="js/scenario_09_ima2.js"></script>
+    <script src="js/scenario_10_rosc.js"></script>
+    <script src="js/scenario_11_convulsiva.js"></script>
+    <!-- Scripts -->
+    <script src="js/scenario_01_abuso_alcoolico.js"></script>
+    <script src="js/scenario_02_tuffo_scogli.js"></script>
+    <script src="js/scenario_03_donna_gravida.js"></script>
+    <script src="js/scenario_04_diabete_ipoglicemia.js"></script>
+    <script src="js/scenario_05_dolore_addominale.js"></script>
+    <script src="js/scenario_06_cardiopalmo.js"></script>
+    <script src="js/scenario_07_ipertensione.js"></script>
+    <script src="js/scenario_08_ima.js"></script>
+    <script src="js/scenario_09_ima2.js"></script>
+    <script src="js/scenario_10_rosc.js"></script>
+    <script src="js/scenario_11_convulsiva.js"></script>
+    <script src="js/scenario_12_ictus.js"></script>
+    <script src="js/scenario_13_co_ragazza.js"></script>
+    <script src="js/scenario_14_co_uomo.js"></script>
+    <!-- Scripts -->
+    <script src="js/scenario_01_abuso_alcoolico.js"></script>
+    <script src="js/scenario_02_tuffo_scogli.js"></script>
+    <script src="js/scenario_03_donna_gravida.js"></script>
+    <script src="js/scenario_04_diabete_ipoglicemia.js"></script>
+    <script src="js/scenario_05_dolore_addominale.js"></script>
+    <script src="js/scenario_06_cardiopalmo.js"></script>
+    <script src="js/scenario_07_ipertensione.js"></script>
+    <script src="js/scenario_08_ima.js"></script>
+    <script src="js/scenario_09_ima2.js"></script>
+    <script src="js/scenario_10_rosc.js"></script>
+    <script src="js/scenario_11_convulsiva.js"></script>
+    <script src="js/scenario_12_ictus.js"></script>
+    <script src="js/scenario_13_co_ragazza.js"></script>
+    <script src="js/scenario_14_co_uomo.js"></script>
+    <script src="js/scenario_15_polmonite.js"></script>
+    <script src="js/scenario_16_edema_polmonare.js"></script>
+    <script src="js/scenario_17_asma.js"></script>
+    <script src="js/scenario_18_allergia.js"></script>
+    <script src="js/scenario-engine.js"></script>
+</body>
+</html>

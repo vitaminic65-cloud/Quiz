@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#4F46E5">
+    <title>Quiz di Addestramento AREU</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Confetti Library (3KB) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <!-- Schermata Menu Principale -->
+    <div id="menuScreen" class="screen active">
+        <div class="container">
+            <!-- Header con controlli -->
+            <div class="app-header">
+                <div class="controls-left">
+                    <button id="themeToggle" class="icon-btn" title="Cambia tema">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                    <button id="soundToggle" class="icon-btn" title="Suoni On/Off">
+                        <span class="sound-icon">🔊</span>
+                    </button>
+                </div>
+                <div class="controls-right">
+                    <div id="streakBadge" class="streak-badge" style="display: none;">
+                        <span class="streak-icon">🔥</span>
+                        <span id="streakCount">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h1 class="app-title">
+                <span class="title-icon">📚</span>
+                Quiz di Addestramento
+            </h1>
+            <p class="subtitle" id="userGreeting">Seleziona un quiz per iniziare</p>
+            
+            <!-- ==================== INIZIO DISCLAIMER ==================== -->
+            <div class="disclaimer-box">
+                <div class="disclaimer-icon">ℹ️</div>
+                <div class="disclaimer-content">
+                    <h3 class="disclaimer-title">Nota Importante</h3>
+                    <p class="disclaimer-text">
+                        Questa app è finalizzata esclusivamente al <strong>ripasso</strong> dopo aver studiato le dispense ufficiali.
+                        <br>
+                        Le domande e risposte sono tratte da <strong>Dispense ufficiali AREU</strong> aggiornate a <strong>Febbraio 2026</strong>.
+                    </p>
+                </div>
+            </div>
+            <!-- ==================== FINE DISCLAIMER ==================== -->
+            
+            <!-- Badges Sbloccati -->
+            <div id="badgesContainer" class="badges-container" style="display: none;">
+                <h3 class="badges-title">🏅 Achievements Sbloccati</h3>
+                <div id="badgesList" class="badges-list"></div>
+            </div>
+            
+            <div class="menu-buttons">
+                <!-- Sfida Rapida -->
+                <button class="menu-btn speed-quiz" data-quiz="speed">
+                    <span class="quiz-icon">⚡</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">Sfida Rapida</span>
+                        <span class="quiz-info">5 Domande Lampo</span>
+                    </div>
+                    <span class="quiz-arrow">→</span>
+                </button>
+                
+                <!-- Revisione Errori -->
+                <button id="reviewErrorsBtn" class="menu-btn review-quiz" data-quiz="review" style="display: none;">
+                    <span class="quiz-icon">📝</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">Ripassa Errori</span>
+                        <span id="reviewCount" class="quiz-info">0 domande</span>
+                    </div>
+                    <span class="quiz-arrow">→</span>
+                </button>
+                
+                <!-- Quiz specifici (8 capitoli) -->
+                <button class="menu-btn" data-quiz="1" data-chapter="1">
+                    <span class="quiz-number">01</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">TRAUMA</span>
+                        <span class="quiz-subtitle">Capitolo 1</span>
+                    </div>
+                    <div class="chapter-progress">
+                        <svg class="progress-ring" width="32" height="32">
+                            <circle class="progress-ring-bg" cx="16" cy="16" r="14"></circle>
+                            <circle class="progress-ring-fill" cx="16" cy="16" r="14" data-chapter="1"></circle>
+                        </svg>
+                    </div>
+                    <span class="quiz-arrow">→</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="2" data-chapter="2">
+                    <span class="quiz-number">02</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">EMERGENZE MEDICHE</span>
+                        <span class="quiz-subtitle">Capitolo 2</span>
+                    </div>
+                    <div class="chapter-progress">
+                        <svg class="progress-ring" width="32" height="32">
+                            <circle class="progress-ring-bg" cx="16" cy="16" r="14"></circle>
+                            <circle class="progress-ring-fill" cx="16" cy="16" r="14" data-chapter="2"></circle>
+                        </svg>
+                    </div>
+                    <span class="quiz-arrow">→</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="3" data-chapter="3">
+                    <span class="quiz-number">03</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">EMERGENZE OSTETRICHE</span>
+                        <span class="quiz-subtitle">Capitolo 3</span>
+                    </div>
+                    <div class="chapter-progress">
+                        <svg class="progress-ring" width="32" height="32">
+                            <circle class="progress-ring-bg" cx="16" cy="16" r="14"></circle>
+                            <circle class="progress-ring-fill" cx="16" cy="16" r="14" data-chapter="3"></circle>
+                        </svg>
+                    </div>
+                    <span class="quiz-arrow">→</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="4" data-chapter="4">
+                    <span class="quiz-number">04</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">EMERGENZE AMBIENTALI</span>
+                        <span class="quiz-subtitle">Capitolo 4</span>
+                    </div>
+                    <div class="chapter-progress">
+                        <svg class="progress-ring" width="32" height="32">
+                            <circle class="progress-ring-bg" cx="16" cy="16" r="14"></circle>
+                            <circle class="progress-ring-fill" cx="16" cy="16" r="14" data-chapter="4"></circle>
+                        </svg>
+                    </div>
+                    <span class="quiz-arrow">→</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="5" data-chapter="5">
+                    <span class="quiz-number">05</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">TRATTAMENTO PRIMARIO</span>
+                        <span class="quiz-subtitle">Capitolo 5</span>
+                    </div>
+                    <div class="chapter-progress">
+                        <svg class="progress-ring" width="32" height="32">
+                            <circle class="progress-ring-bg" cx="16" cy="16" r="14"></circle>
+                            <circle class="progress-ring-fill" cx="16" cy="16" r="14" data-chapter="5"></circle>
+                        </svg>
+                    </div>
+                    <span class="quiz-arrow">→</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="6" data-chapter="6">
+                    <span class="quiz-number">06</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">ASPETTI PSICOLOGICI</span>
+                        <span class="quiz-subtitle">Capitolo 6</span>
+                    </div>
+                    <div class="chapter-progress">
+                        <svg class="progress-ring" width="32" height="32">
+                            <circle class="progress-ring-bg" cx="16" cy="16" r="14"></circle>
+                            <circle class="progress-ring-fill" cx="16" cy="16" r="14" data-chapter="6"></circle>
+                        </svg>
+                    </div>
+                    <span class="quiz-arrow">→</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="7" data-chapter="7">
+                    <span class="quiz-number">07</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">OPERAZIONI IN AMBULANZA</span>
+                        <span class="quiz-subtitle">Capitolo 7</span>
+                    </div>
+                    <div class="chapter-progress">
+                        <svg class="progress-ring" width="32" height="32">
+                            <circle class="progress-ring-bg" cx="16" cy="16" r="14"></circle>
+                            <circle class="progress-ring-fill" cx="16" cy="16" r="14" data-chapter="7"></circle>
+                        </svg>
+                    </div>
+                    <span class="quiz-arrow">→</span>
+                </button>
+                
+                <button class="menu-btn" data-quiz="8" data-chapter="8">
+                    <span class="quiz-number">08</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">LA MAXI EMERGENZA</span>
+                        <span class="quiz-subtitle">Capitolo 8</span>
+                    </div>
+                    <div class="chapter-progress">
+                        <svg class="progress-ring" width="32" height="32">
+                            <circle class="progress-ring-bg" cx="16" cy="16" r="14"></circle>
+                            <circle class="progress-ring-fill" cx="16" cy="16" r="14" data-chapter="8"></circle>
+                        </svg>
+                    </div>
+                    <span class="quiz-arrow">→</span>
+                </button>
+                
+                <!-- Quiz Generale -->
+                <button class="menu-btn general-quiz" data-quiz="general">
+                    <span class="quiz-icon">⭐</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">Quiz Generale</span>
+                        <span class="quiz-info">50 Domande Casuali</span>
+                    </div>
+                    <span class="quiz-arrow">→</span>
+                </button>
+                
+                <!-- SEZIONE FORMAZIONE AVANZATA -->
+                <div class="section-divider">
+                    <span class="divider-text">🎓 Formazione Avanzata</span>
+                </div>
+                
+                <!-- SCENARI - ATTIVO -->
+                <button class="menu-btn scenari-btn" onclick="window.location.href='scenario-app/menu-scenari.html'">
+                    <span class="quiz-icon">🎭</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">SCENARI INTERATTIVI</span>
+                        <span class="quiz-info">18 Casi Clinici ABCDE</span>
+                    </div>
+                    <span class="quiz-arrow">→</span>
+                </button>
+                
+                <!-- SKILL - DISABILITATO -->
+                <button class="menu-btn skill-btn disabled" disabled>
+                    <span class="quiz-icon">📚</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">SKILL</span>
+                        <span class="quiz-info">Competenze Tecniche</span>
+                    </div>
+                    <span class="coming-soon-badge">Prossimamente</span>
+                </button>
+                
+                <!-- RIPASSI - DISABILITATO -->
+                <button class="menu-btn ripassi-btn disabled" disabled>
+                    <span class="quiz-icon">🔄</span>
+                    <div class="quiz-content">
+                        <span class="quiz-title">RIPASSI</span>
+                        <span class="quiz-info">Revisione Argomenti</span>
+                    </div>
+                    <span class="coming-soon-badge">Prossimamente</span>
+                </button>
+            </div>
+            
+            <div class="stats-container">
+                <button id="clearStatsBtn" class="clear-stats-btn">
+                    <span class="btn-icon">🗑️</span>
+                    Cancella Statistiche
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Timer Settings -->
+    <div id="timerModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">⏱️ Impostazioni Timer</h2>
+            <p class="modal-subtitle">Scegli la difficoltà</p>
+            <div class="timer-options">
+                <button class="timer-option" data-time="5">
+                    <span class="option-icon">🔥</span>
+                    <span class="option-label">5 secondi</span>
+                    <span class="option-desc">Difficile</span>
+                </button>
+                <button class="timer-option selected" data-time="10">
+                    <span class="option-icon">⚡</span>
+                    <span class="option-label">10 secondi</span>
+                    <span class="option-desc">Normale</span>
+                </button>
+                <button class="timer-option" data-time="15">
+                    <span class="option-icon">🌱</span>
+                    <span class="option-label">15 secondi</span>
+                    <span class="option-desc">Facile</span>
+                </button>
+                <button class="timer-option" data-time="0">
+                    <span class="option-icon">♾️</span>
+                    <span class="option-label">Nessun Timer</span>
+                    <span class="option-desc">Relax</span>
+                </button>
+            </div>
+            <button id="startQuizBtn" class="modal-btn-start">Inizia Quiz</button>
+        </div>
+    </div>
+
+    <!-- Schermata Quiz -->
+    <div id="quizScreen" class="screen">
+        <div class="container">
+            <!-- Header con timer e progresso -->
+            <div class="quiz-header">
+                <button id="backBtn" class="back-btn">
+                    <span class="back-icon">←</span>
+                    Menu
+                </button>
+                <div class="progress-info">
+                    <span id="questionProgress">Domanda 1 / 30</span>
+                </div>
+                <div class="timer-container" id="timerContainer">
+                    <svg class="timer-svg" width="60" height="60">
+                        <circle class="timer-bg" cx="30" cy="30" r="26"></circle>
+                        <circle id="timerCircle" class="timer-progress" cx="30" cy="30" r="26"></circle>
+                    </svg>
+                    <div class="timer-text-wrapper">
+                        <span id="timerText" class="timer-text">10</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra di progresso -->
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            
+            <!-- Domanda -->
+            <div class="question-container">
+                <div class="question-header">
+                    <span class="question-icon">❓</span>
+                </div>
+                <h2 id="questionText" class="question-text"></h2>
+            </div>
+            
+            <!-- Opzioni di risposta -->
+            <div id="answersContainer" class="answers-container"></div>
+        </div>
+    </div>
+
+    <!-- Schermata Risultati -->
+    <div id="resultsScreen" class="screen">
+        <div class="container">
+            <div class="results-container">
+                <h1 class="results-title">
+                    <span class="results-emoji">🎯</span>
+                    Quiz Completato!
+                </h1>
+                
+                <!-- Badge Sbloccato (se presente) -->
+                <div id="newBadgeAlert" class="new-badge-alert" style="display: none;">
+                    <span class="badge-unlock-icon">🎉</span>
+                    <span class="badge-unlock-text">Nuovo Achievement Sbloccato!</span>
+                    <div id="unlockedBadge" class="unlocked-badge"></div>
+                </div>
+                
+                <div class="score-circle-wrapper">
+                    <div class="score-circle">
+                        <div class="score-percentage">
+                            <span id="scorePercentage">0</span>
+                            <span class="percentage-symbol">%</span>
+                        </div>
+                        <svg class="score-ring" width="220" height="220">
+                            <circle class="score-ring-background" cx="110" cy="110" r="100"></circle>
+                            <circle id="scoreRingProgress" class="score-ring-progress" cx="110" cy="110" r="100"></circle>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="results-details">
+                    <div class="result-stat correct-stat">
+                        <span class="stat-icon">✓</span>
+                        <div class="stat-content">
+                            <span class="result-label">Corrette</span>
+                            <span id="correctAnswers" class="result-value">0</span>
+                        </div>
+                    </div>
+                    <div class="result-stat wrong-stat">
+                        <span class="stat-icon">✗</span>
+                        <div class="stat-content">
+                            <span class="result-label">Errate</span>
+                            <span id="wrongAnswers" class="result-value">0</span>
+                        </div>
+                    </div>
+                    <div class="result-stat total-stat">
+                        <span class="stat-icon">Σ</span>
+                        <div class="stat-content">
+                            <span class="result-label">Totali</span>
+                            <span id="totalQuestions" class="result-value">0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="resultMessage" class="result-message"></div>
+                
+                <div class="results-buttons">
+                    <button id="retryBtn" class="result-btn retry">
+                        <span class="btn-icon">🔄</span>
+                        Riprova Quiz
+                    </button>
+                    <button id="reviewErrorsResultBtn" class="result-btn review" style="display: none;">
+                        <span class="btn-icon">📝</span>
+                        Ripassa <span id="errorsCountBtn">0</span> Errori
+                    </button>
+                    <button id="menuBtn" class="result-btn menu">
+                        <span class="btn-icon">🏠</span>
+                        Torna al Menu
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="js/quizzes/capitolo1.js"></script>
+    <script src="js/quizzes/capitolo2.js"></script>
+    <script src="js/quizzes/capitolo3.js"></script>
+    <script src="js/quizzes/capitolo4.js"></script>
+    <script src="js/quizzes/capitolo5.js"></script>
+    <script src="js/quizzes/capitolo6.js"></script>
+    <script src="js/quizzes/capitolo7.js"></script>
+    <script src="js/quizzes/capitolo8.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
